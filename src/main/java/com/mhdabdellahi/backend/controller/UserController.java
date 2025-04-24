@@ -1,21 +1,19 @@
 package com.mhdabdellahi.backend.controller;
 
-import com.mhdabdellahi.backend.dto.ChangePasswordRequest;
-import com.mhdabdellahi.backend.dto.ChangeUsernameRequest;
-import com.mhdabdellahi.backend.dto.ProfileUpdateRequest;
-import com.mhdabdellahi.backend.dto.UserResponse;
+import com.mhdabdellahi.backend.dto.*;
 import com.mhdabdellahi.backend.model.Profile;
 import com.mhdabdellahi.backend.model.User;
 import com.mhdabdellahi.backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.List;
 import java.util.Map;
 
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
@@ -25,13 +23,21 @@ public class UserController {
     private UserService userService;
 
 
-    @GetMapping
-    public ResponseEntity<List<UserResponse>> getAllUsers() {
-        List<UserResponse> users = userService.getAllUsers().stream()
-                .map(UserResponse::new)
-                .toList();
-        return ResponseEntity.ok(users);
+    @GetMapping("/me")
+    public ResponseEntity<UserResponse> getCurrentUser(Principal principal) {
+        User user = userService.getUserByUsername(principal.getName());
+        return ResponseEntity.ok(new UserResponse(user));
     }
+
+    @GetMapping("/is-admin")
+    public ResponseEntity<AdminCheckResponse> checkIfAdmin(Principal principal) {
+        User user = userService.getUserByUsername(principal.getName());
+        boolean isAdmin = user.getRole().equalsIgnoreCase("ADMIN");
+        AdminCheckResponse adminCheckResponse = new AdminCheckResponse();
+        adminCheckResponse.setAdmin(isAdmin);
+        return ResponseEntity.ok(adminCheckResponse);
+    }
+
 
     @PostMapping("/change-password")
     public ResponseEntity<?> changePassword(
@@ -41,6 +47,19 @@ public class UserController {
         userService.changePassword(principal.getName(), request);
         return ResponseEntity.ok().build();
     }
+
+    @PutMapping("/change-username")
+    public ResponseEntity<?> updateUsername(
+            @RequestBody ChangeUsernameRequest request,
+            Principal principal
+    ) {
+        User updatedUser = userService.updateUsername(
+                principal.getName(),
+                request.getNewUsername()
+        );
+        return ResponseEntity.ok(new UserResponse(updatedUser));
+    }
+
 
     @PutMapping("/update-profile")
     public ResponseEntity<?> updateProfile(
@@ -60,24 +79,12 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/change-username")
-    public ResponseEntity<?> updateUsername(
-            @RequestBody ChangeUsernameRequest request,
-            Principal principal
-    ) {
-        User updatedUser = userService.updateUsername(
-                principal.getName(),
-                request.getNewUsername()
-        );
-        return ResponseEntity.ok(new UserResponse(updatedUser));
-    }
-
-
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<?> deleteUser(@PathVariable Long userId) {
-        userService.deleteUserById(userId);
+    @DeleteMapping("/delete-account")
+    public ResponseEntity<?> deleteUserByUsername(Principal principal) {
+        userService.deleteUserByUsername(principal.getName());
         return ResponseEntity.ok().body(
-                Map.of("message", "User account deleted successfully by admin")
+                Map.of("message", "User account deleted successfully")
         );
     }
+
 }

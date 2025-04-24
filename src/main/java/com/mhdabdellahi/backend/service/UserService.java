@@ -9,6 +9,10 @@ import com.mhdabdellahi.backend.repository.ProfileRepository;
 import com.mhdabdellahi.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -101,9 +105,27 @@ public class UserService {
         return "Fail";
     }
 
+
     public void deleteUserById(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with id: " + userId));
         userRepository.delete(user);
+    }
+
+    public void deleteUserByUsername(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with id: " + username));
+        userRepository.delete(user);
+    }
+
+
+    public Page<User> searchUsers(String search, String role, int page, int size) {
+        Specification<User> spec = Specification
+                .where(UserSpecifications.containsSearch(search))
+                .and(UserSpecifications.hasRole(role));
+
+        // Adjust page to be zero-indexed
+        Pageable pageable = PageRequest.of(Math.max(page - 1, 0), size);
+        return userRepository.findAll(spec, pageable);
     }
 }
