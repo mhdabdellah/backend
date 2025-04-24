@@ -5,8 +5,6 @@ import com.mhdabdellahi.backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,40 +35,3 @@ public class AuthController {
         return ResponseEntity.ok().build();
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
-//@RestController
-////@RequestMapping("/auth")
-//public class AuthController {
-//
-//    @PostMapping("/")
-//    public String index() {
-//        return "welcome to index ";
-//    }
-//
-//    @PostMapping("/register")
-//    public ResponseEntity<?> register() {
-//
-//        return ResponseEntity.ok().build();
-//    }
-//
-//    @PostMapping("/login")
-//    public ResponseEntity<String> login() {
-////        return "index.html";
-//        return ResponseEntity.ok("Logged succefully ");
-//    }
-//}

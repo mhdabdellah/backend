@@ -6,7 +6,6 @@ import com.mhdabdellahi.backend.model.User;
 import com.mhdabdellahi.backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

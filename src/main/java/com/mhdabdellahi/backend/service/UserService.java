@@ -124,7 +124,6 @@ public class UserService {
                 .where(UserSpecifications.containsSearch(search))
                 .and(UserSpecifications.hasRole(role));
 
-        // Adjust page to be zero-indexed
         Pageable pageable = PageRequest.of(Math.max(page - 1, 0), size);
         return userRepository.findAll(spec, pageable);
     }

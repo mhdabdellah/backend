@@ -2,182 +2,296 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>API Documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete API Documentation | Mauritanian User Management</title>
     <style>
+        :root {
+            --primary: #2A5C82;
+            --secondary: #3A8DDE;
+            --text: #2D3748;
+            --background: #F7FAFC;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             line-height: 1.6;
-            margin: 2rem;
+            color: var(--text);
+            background-color: var(--background);
+            padding: 2rem;
             max-width: 1200px;
+            margin: 0 auto;
         }
-        h1, h2, h3 {
-            color: #2c3e50;
+
+        .header {
+            text-align: center;
+            padding: 2rem 0;
+            border-bottom: 3px solid var(--primary);
+            margin-bottom: 2rem;
         }
-        .endpoint {
-            background-color: #f8f9fa;
+
+        .endpoint-group {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .http-method {
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 5px;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+
+        .get { background: #61AFFE; color: white; }
+        .post { background: #49CC90; color: white; }
+        .put { background: #FCA130; color: white; }
+        .delete { background: #F93E3E; color: white; }
+
+        .example-block {
+            background: #F8FAFC;
+            border-left: 4px solid var(--primary);
             padding: 1rem;
             margin: 1rem 0;
-            border-radius: 5px;
+            border-radius: 4px;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin: 1rem 0;
         }
+
         th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
+            padding: 12px;
             text-align: left;
+            border-bottom: 1px solid #E2E8F0;
         }
+
         th {
-            background-color: #4CAF50;
+            background: var(--primary);
             color: white;
         }
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
+
+        .developer-info {
+            background: linear-gradient(145deg, #2A5C82, #3A8DDE);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 3rem;
         }
-        .method {
-            font-weight: bold;
-            color: #fff;
-            padding: 3px 6px;
-            border-radius: 3px;
-        }
-        .get { background-color: #61affe; }
-        .post { background-color: #49cc90; }
-        .put { background-color: #fca130; }
-        .delete { background-color: #f93e3e; }
     </style>
 </head>
 <body>
-<h1>API Documentation</h1>
-
-<h2>Authentication & Authorization</h2>
-<p>All endpoints except /register and /login require JWT authentication in the Authorization header</p>
-
-<h2>Data Transfer Objects (DTOs)</h2>
-
-<h3>RegisterRequest</h3>
-<table>
-    <tr><th>Field</th><th>Type</th><th>Description</th></tr>
-    <tr><td>username</td><td>String</td><td>Unique username</td></tr>
-    <tr><td>password</td><td>String</td><td>User password</td></tr>
-    <tr><td>role</td><td>String</td><td>User role (USER/ADMIN)</td></tr>
-    <tr><td>firstName</td><td>String</td><td>First name</td></tr>
-    <tr><td>lastName</td><td>String</td><td>Last name</td></tr>
-    <tr><td>sex</td><td>String</td><td>Gender</td></tr>
-    <tr><td>age</td><td>Integer</td><td>User age</td></tr>
-    <tr><td>email</td><td>String</td><td>Email address</td></tr>
-</table>
-
-<h3>LoginRequest</h3>
-<table>
-    <tr><th>Field</th><th>Type</th><th>Description</th></tr>
-    <tr><td>username</td><td>String</td><td>Registered username</td></tr>
-    <tr><td>password</td><td>String</td><td>Account password</td></tr>
-</table>
-
-<h2>API Endpoints</h2>
-
-<div class="endpoint">
-    <h3>Authentication Endpoints</h3>
-
-    <div class="method post">POST</div>
-    <h4>/api/auth/register</h4>
-    <p>Register a new user</p>
-    <p><strong>Request Example:</strong></p>
-    <pre>
-{
-    "username": "john_doe",
-    "password": "securePass123",
-    "role": "USER",
-    "firstName": "John",
-    "lastName": "Doe",
-    "sex": "Male",
-    "age": 30,
-    "email": "john@example.com"
-}</pre>
-
-    <div class="method post">POST</div>
-    <h4>/api/auth/login</h4>
-    <p>User login</p>
-    <p><strong>Response:</strong> JWT token</p>
-
-    <div class="method post">POST</div>
-    <h4>/api/auth/logout</h4>
-    <p>Logout user</p>
+<div class="header">
+    <h1>🇲🇷 Complete API Documentation</h1>
+    <p>User Management System with Admin Controls</p>
+    <p><strong>Base URL:</strong> <code>https://backend-okyl.onrender.com</code></p>
 </div>
 
-<div class="endpoint">
-    <h3>User Management Endpoints</h3>
+<div class="developer-info">
+    <h2>Developer Information</h2>
+    <p><strong>Name:</strong> Mohamed Abdellahi Sidi Mohamed Blal</p>
+    <p><strong>GitHub:</strong> <a href="https://github.com/mhdabdellah" style="color: white;">mhdabdellah</a></p>
+    <p><strong>Email:</strong> <a href="mailto:mhdabdellahi0@gmail.com" style="color: white;">mhdabdellahi0@gmail.com</a></p>
+    <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/mohamed-abdellahi" style="color: white;">Mohamed's Profile</a></p>
+</div>
 
-    <div class="method get">GET</div>
-    <h4>/api/users</h4>
-    <p>Get all users (Admin only)</p>
-    <p><strong>Response Example:</strong></p>
-    <pre>
-[
+<!-- Authentication Endpoints -->
+<div class="endpoint-group">
+    <h2>🔑 Authentication Endpoints</h2>
+
+    <div class="endpoint">
+        <div class="http-method post">POST</div>
+        <h3>/api/auth/register</h3>
+        <p>Register a new user account</p>
+        <table>
+            <tr><th>Field</th><th>Type</th><th>Required</th></tr>
+            <tr><td>username</td><td>String</td><td>Yes</td></tr>
+            <tr><td>password</td><td>String</td><td>Yes</td></tr>
+            <tr><td>role</td><td>String</td><td>Yes</td></tr>
+            <tr><td>firstName</td><td>String</td><td>Yes</td></tr>
+            <tr><td>lastName</td><td>String</td><td>Yes</td></tr>
+            <tr><td>sex</td><td>String</td><td>No</td></tr>
+            <tr><td>age</td><td>Integer</td><td>No</td></tr>
+            <tr><td>email</td><td>String</td><td>Yes</td></tr>
+        </table>
+        <div class="example-block">
+                <pre>{
+  "username": "nouakchott_user",
+  "password": "SaharaSecure!123",
+  "role": "USER",
+  "firstName": "Ahmed",
+  "lastName": "Mahmoud",
+  "email": "ahmed.mahmoud@mr.example"
+}</pre>
+        </div>
+    </div>
+
+    <div class="endpoint">
+        <div class="http-method post">POST</div>
+        <h3>/api/auth/login</h3>
+        <p>Authenticate user and receive JWT token</p>
+        <div class="example-block">
+                <pre>{
+  "username": "nouakchott_user",
+  "password": "SaharaSecure!123"
+}</pre>
+        </div>
+    </div>
+
+    <div class="endpoint">
+        <div class="http-method post">POST</div>
+        <h3>/api/auth/logout</h3>
+        <p>Invalidate current session</p>
+    </div>
+</div>
+
+<!-- User Endpoints -->
+<div class="endpoint-group">
+    <h2>👤 User Management Endpoints</h2>
+
+    <div class="endpoint">
+        <div class="http-method get">GET</div>
+        <h3>/api/users/me</h3>
+        <p>Get current user details</p>
+        <div class="example-block">
+                <pre>{
+  "username": "nouakchott_user",
+  "role": "USER",
+  "profile": {
+    "firstName": "Ahmed",
+    "lastName": "Mahmoud",
+    "email": "ahmed.mahmoud@mr.example",
+    "age": 28,
+    "sex": "Male"
+  }
+}</pre>
+        </div>
+    </div>
+
+    <div class="endpoint">
+        <div class="http-method post">POST</div>
+        <h3>/api/users/change-password</h3>
+        <p>Change current user's password</p>
+        <div class="example-block">
+                <pre>{
+  "oldPassword": "oldPassword123",
+  "newPassword": "newSecurePassword456"
+}</pre>
+        </div>
+    </div>
+
+    <div class="endpoint">
+        <div class="http-method put">PUT</div>
+        <h3>/api/users/change-username</h3>
+        <p>Update current user's username</p>
+        <div class="example-block">
+                <pre>{
+  "newUsername": "updated_nouakchott"
+}</pre>
+        </div>
+    </div>
+
+    <div class="endpoint">
+        <div class="http-method delete">DELETE</div>
+        <h3>/api/users/delete-account</h3>
+        <p>Permanently delete user account</p>
+        <div class="example-block">
+                <pre>{
+  "message": "User account deleted successfully"
+}</pre>
+        </div>
+    </div>
+</div>
+
+<!-- Admin Endpoints -->
+<div class="endpoint-group">
+    <h2>🛡️ Admin Management Endpoints</h2>
+
+    <div class="endpoint">
+        <div class="http-method get">GET</div>
+        <h3>/api/admin/users</h3>
+        <p>Search users with pagination</p>
+        <table>
+            <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+            <tr><td>page</td><td>int</td><td>Page number (default: 1)</td></tr>
+            <tr><td>size</td><td>int</td><td>Items per page (default: 10)</td></tr>
+            <tr><td>search</td><td>String</td><td>Search term</td></tr>
+            <tr><td>role</td><td>String</td><td>Filter by role</td></tr>
+        </table>
+        <div class="example-block">
+                <pre>{
+  "data": [
     {
-        "username": "john_doe",
-        "role": "USER",
-        "profile": {
-            "firstName": "John",
-            "lastName": "Doe",
-            "sex": "Male",
-            "age": 30,
-            "email": "john@example.com"
-        }
+      "username": "admin_user",
+      "role": "ADMIN",
+      "profile": {
+        "firstName": "Admin",
+        "lastName": "User",
+        "email": "admin@mr.example"
+      }
     }
-]</pre>
-
-    <div class="method post">POST</div>
-    <h4>/api/users/change-password</h4>
-    <p>Change user password</p>
-    <p><strong>Request Example:</strong></p>
-    <pre>
-{
-    "oldPassword": "oldPass123",
-    "newPassword": "newSecurePass456"
+  ],
+  "count": 1
 }</pre>
+        </div>
+    </div>
 
-    <div class="method put">PUT</div>
-    <h4>/api/users/update-profile</h4>
-    <p>Update user profile</p>
-    <p><strong>Request Example:</strong></p>
-    <pre>
-{
-    "firstName": "John",
-    "lastName": "Smith",
-    "email": "john.smith@example.com"
+    <div class="endpoint">
+        <div class="http-method post">POST</div>
+        <h3>/api/admin/users/{username}/change-password</h3>
+        <p>Admin password reset for any user</p>
+        <div class="example-block">
+        <div class="example-block">
+            <pre>{
+  "oldPassword": "oldPassword123",
+  "newPassword": "newSecurePassword456"
 }</pre>
+        </div>
+    </div>
 
-    <div class="method put">PUT</div>
-    <h4>/api/users/change-username</h4>
-    <p>Change username</p>
-    <p><strong>Request Example:</strong></p>
-    <pre>
-{
-    "newUsername": "john_smith"
+        <div class="endpoint">
+            <div class="http-method put">PUT</div>
+            <h3>/api/admin/users/change-username</h3>
+            <p>Change username for any user</p>
+            <div class="example-block">
+                <pre>{
+  "newUsername": "updated_nouakchott"
 }</pre>
+            </div>
+        </div>
 
-    <div class="method delete">DELETE</div>
-    <h4>/api/users/{userId}</h4>
-    <p>Delete user (Admin only)</p>
-    <p><strong>Response:</strong></p>
-    <pre>
-{
-    "message": "User account deleted successfully by admin"
+    <div class="endpoint">
+        <div class="http-method delete">DELETE</div>
+        <h3>/api/admin/users/{username}</h3>
+        <p>Admin delete user account</p>
+        <div class="example-block">
+                <pre>{
+  "message": "User account deleted successfully"
 }</pre>
+        </div>
+    </div>
 </div>
 
-<h2>Response Status Codes</h2>
-<table>
-    <tr><th>Code</th><th>Description</th></tr>
-    <tr><td>200</td><td>OK - Successful operation</td></tr>
-    <tr><td>400</td><td>Bad Request - Invalid input</td></tr>
-    <tr><td>401</td><td>Unauthorized - Missing/invalid token</td></tr>
-    <tr><td>403</td><td>Forbidden - Insufficient privileges</td></tr>
-    <tr><td>404</td><td>Not Found - Resource not found</td></tr>
-    <tr><td>500</td><td>Internal Server Error</td></tr>
-</table>
+<!-- Status Codes -->
+<div class="endpoint-group">
+    <h2>📡 HTTP Status Codes</h2>
+    <table>
+        <tr><th>Code</th><th>Description</th></tr>
+        <tr><td>200</td><td>Success</td></tr>
+        <tr><td>400</td><td>Invalid request format</td></tr>
+        <tr><td>401</td><td>Unauthorized</td></tr>
+        <tr><td>403</td><td>Forbidden (Admin required)</td></tr>
+        <tr><td>404</td><td>User not found</td></tr>
+        <tr><td>500</td><td>Server error</td></tr>
+    </table>
+</div>
+
+<div style="text-align: center; margin-top: 3rem; color: #666;">
+    <p>© 2025 Mohamed Abdellahi Sidi Mohamed Blal</p>
+</div>
 </body>
 </html>
