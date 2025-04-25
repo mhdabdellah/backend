@@ -82,6 +82,18 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public void adminResetPassword(String username, String newPassword) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+        if (newPassword == null || newPassword.isBlank()) {
+            throw new IllegalArgumentException("Password cannot be empty");
+        }
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+    }
+
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
@@ -106,15 +118,9 @@ public class UserService {
     }
 
 
-    public void deleteUserById(Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with id: " + userId));
-        userRepository.delete(user);
-    }
-
     public void deleteUserByUsername(String username) {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with id: " + username));
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
         userRepository.delete(user);
     }
 

@@ -87,7 +87,7 @@
 <body>
 <div class="header">
     <h1>🇲🇷 Complete API Documentation</h1>
-    <p>User Management System with Admin Controls</p>
+    <p>User Management System</p>
     <p><strong>Base URL:</strong> <code>https://backend-okyl.onrender.com</code></p>
 </div>
 
@@ -242,12 +242,14 @@
 
     <div class="endpoint">
         <div class="http-method post">POST</div>
-        <h3>/api/admin/users/{username}/change-password</h3>
-        <p>Admin password reset for any user</p>
+        <h3>/api/admin/users/{username}/reset-password</h3>
+        <p>Admin password reset for any user (doesn't require old password)</p>
+        <table>
+            <tr><th>Field</th><th>Type</th><th>Required</th></tr>
+            <tr><td>newPassword</td><td>String</td><td>Yes</td></tr>
+        </table>
         <div class="example-block">
-        <div class="example-block">
-            <pre>{
-  "oldPassword": "oldPassword123",
+        <pre>{
   "newPassword": "newSecurePassword456"
 }</pre>
         </div>

@@ -2,6 +2,7 @@ package com.mhdabdellahi.backend.controller;
 
 import com.mhdabdellahi.backend.dto.ChangePasswordRequest;
 import com.mhdabdellahi.backend.dto.ChangeUsernameRequest;
+import com.mhdabdellahi.backend.dto.NewPasswordRequest;
 import com.mhdabdellahi.backend.dto.UserResponse;
 import com.mhdabdellahi.backend.model.User;
 import com.mhdabdellahi.backend.service.UserService;
@@ -45,6 +46,15 @@ public class AdminController {
             @RequestBody ChangePasswordRequest request
     ) {
         userService.changePassword(username, request);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/{username}/reset-password")
+    public ResponseEntity<?> adminResetPassword(
+            @PathVariable String username,
+            @RequestBody NewPasswordRequest request
+    ) {
+        userService.adminResetPassword(username, request.getNewPassword());
         return ResponseEntity.ok().build();
     }
 
